@@ -1,6 +1,8 @@
 package Service;
 
+import DAO.AccountDAO;
 import Model.Account;
+import java.util.List;
 
 public class AccountService {
     public AccountDAO accountDAO;
@@ -21,5 +23,16 @@ public class AccountService {
         
         return accountDAO.insertAccount(account);
     }
+    public Account loginAccount (Account account) {
+        List<Account> list = accountDAO.getAllAccounts();
+        for (Account target : list )
+            if (account.getUsername() == target.getUsername() && account.getPassword() == target.getPassword()) {
+                return accountDAO.getAccount(account);
+                
+        }
+        System.out.println("Invalid login");
+        return null;
+    }
+    
     
 }
