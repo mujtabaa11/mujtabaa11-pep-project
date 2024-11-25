@@ -23,7 +23,7 @@ public class MessageService {
 
     public Message addMessage(Message message) {
         
-        if (message.getMessage_text() != null && message.getMessage_text().length() <= 255 && isValidAccount(message.getPosted_by())) {
+        if (message.getMessage_text() != null && message.getMessage_text().length() <= 255 && message.message_text.trim() != "" && isValidAccount(message.getPosted_by())) {
             return messageDAO.insertMessage(message);
         }
         return null;

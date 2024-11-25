@@ -81,10 +81,10 @@ public class SocialMediaController {
         Message message = mapper.readValue(ctx.body(), Message.class);
         Message createdMessage = messageService.addMessage(message);
         
-        if(createdMessage !=null){
+        if(createdMessage !=null) {
             ctx.json(createdMessage);
         }else{
-            ctx.status(400).result("Invalid message data.");
+            ctx.status(400);
         }
     }
 
