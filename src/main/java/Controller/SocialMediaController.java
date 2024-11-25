@@ -55,7 +55,7 @@ public class SocialMediaController {
         if(newAccount != null){
             ctx.json(newAccount);
         }else{
-            ctx.status(400).result("Invalid registeration. Please try again");
+            ctx.status(400);
         }
     }
 
@@ -67,7 +67,7 @@ public class SocialMediaController {
         if (loggedInAccount != null) {
             ctx.json(loggedInAccount);
         } else {
-            ctx.status(401).result("Invalid username or password.");
+            ctx.status(401);
         }
     }
 
@@ -130,6 +130,7 @@ public class SocialMediaController {
         
         int accountId = Integer.parseInt(ctx.pathParam("account_id"));
         List<Message> messages = messageService.getAllMessagesByAccountId(accountId);
+        
         ctx.json(messages);
         
     }
