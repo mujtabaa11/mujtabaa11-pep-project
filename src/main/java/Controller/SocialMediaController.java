@@ -116,16 +116,23 @@ public class SocialMediaController {
        
         int messageId = Integer.parseInt(ctx.pathParam("message_id"));
         Message message = mapper.readValue(ctx.body(), Message.class);
-
-        if (message.message_text != null && message.message_text.length() <= 255) {
-            Message updatedMessage = messageService.updateMessageById(messageId, message.message_text);
-            if (updatedMessage != null) {
-                ctx.json(updatedMessage);
-            } else {
-                ctx.status(400).result("Update failed. Message not found.");
-            }
+    
+        if (message.message_text == null || message.message_text.trim().isEmpty()) {
+            ctx.status(400).result("Message text cannot be empty.");
+            return;
+        }
+    
+        if (message.message_text.length() > 255) {
+            ctx.status(400).result("Message text cannot exceed 255 characters.");
+            return;
+        }
+    
+        Message updatedMessage = messageService.updateMessageById(messageId, message.message_text);
+    
+        if (updatedMessage != null) {
+            ctx.json(updatedMessage);
         } else {
-            ctx.status(400).result("Invalid message text.");
+            ctx.status(404).result("Message not found or invalid data.");
         }
     }
 

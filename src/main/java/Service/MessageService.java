@@ -43,11 +43,23 @@ public class MessageService {
 
     public Message updateMessageById(int message_id, String message_text ) {
 
-        Message existingMessage = messageDAO.getMessageById(message_id);
-        if (existingMessage != null && message_text != null && message_text.length() <= 255) {
-            return messageDAO.updateMessageById(message_id, message_text);
+        if (message_text == null || message_text.trim().isEmpty()) {
+            System.out.println("Invalid message: text cannot be empty.");
+            return null;
         }
-        return null;
+    
+        if (message_text.length() > 255) {
+            System.out.println("Invalid message: text cannot exceed 255 characters.");
+            return null;
+        }
+    
+        Message existingMessage = messageDAO.getMessageById(message_id);
+        
+        if (existingMessage == null) {
+            System.out.println("Message not found.");
+            return null;
+        }
+        return messageDAO.updateMessageById(message_id, message_text);
     }
 
     public List<Message> getAllMessagesByAccountId(int account_id) {
