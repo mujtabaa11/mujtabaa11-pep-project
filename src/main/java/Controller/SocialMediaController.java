@@ -7,7 +7,6 @@ import Service.MessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import DAO.AccountDAO;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -63,7 +62,7 @@ public class SocialMediaController {
     private void userLoginHandler(Context ctx) throws JsonProcessingException {
 
         Account account = mapper.readValue(ctx.body(), Account.class);
-        Account loggedInAccount = accountService.login(account.username, account.password);
+        Account loggedInAccount = accountService.loginAccount(account);
 
         if (loggedInAccount != null) {
             ctx.json(loggedInAccount);
